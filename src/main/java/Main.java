@@ -1,12 +1,11 @@
-import com.mysql.cj.jdbc.MysqlDataSource;
+import util.JBDCUtil;
 
 import java.sql.*;
 
 public class Main {
     public static void main(String[] args) {
 
-        try (final Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/jbdcexsshema", "root", ""); Statement statement = connection.createStatement()) {
-
+        try (Statement statement = JBDCUtil.getConnection().createStatement()){
             final ResultSet resultSet = statement.executeQuery("SELECT * FROM book");
             while (resultSet.next()) {
                 System.out.println(resultSet.getInt("id"));
@@ -22,12 +21,7 @@ public class Main {
 
         //or
 
-        MysqlDataSource dataSource = new MysqlDataSource();
-        dataSource.setUrl("jdbc:mysql://localhost:3306/jbdcexsshema");
-        dataSource.setUser("root");
-        dataSource.setPassword("");
-
-        try (final Connection connection = dataSource.getConnection(); Statement statement = connection.createStatement()) {
+        try (Statement statement = JBDCUtil.getConnection().createStatement()) {
 
             final ResultSet resultSet = statement.executeQuery("SELECT * FROM book");
             while (resultSet.next()) {
