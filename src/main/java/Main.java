@@ -64,5 +64,20 @@ public class Main {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
+        try (CallableStatement statement = JBDCUtil.getConnection().prepareCall("{call selectAllFromBook}")){
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                System.out.println(resultSet.getInt("id"));
+                System.out.println(resultSet.getString("isbn"));
+                System.out.println(resultSet.getString("description"));
+                System.out.println(resultSet.getString("author"));
+                System.out.println(resultSet.getDate("release_date"));
+                System.out.println(resultSet.getString("title"));
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 }
