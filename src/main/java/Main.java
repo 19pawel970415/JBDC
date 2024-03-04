@@ -1,6 +1,9 @@
+import model.Book;
+import service.BookService;
 import util.JBDCUtil;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -79,5 +82,23 @@ public class Main {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        ArrayList<Book> allBooksBefore = BookService.getAllBooksBefore(Date.valueOf("1970-01-01"));
+        for (Book book : allBooksBefore) {
+            System.out.println(book);
+        }
+        ArrayList<Book> adamSmithBooks = BookService.getAllBooksBy("Adam Smith");
+        for (Book adamSmithBook : adamSmithBooks) {
+            System.out.println(adamSmithBook);
+        }
+        ArrayList<Book> adamSmithBooksPS = BookService.getAllBooksByPS("Adam Smith");
+        for (Book adamSmithBook : adamSmithBooksPS) {
+            System.out.println(adamSmithBook);
+        }
+        ArrayList<Book> allBooksSortedByTitle = BookService.getAllBooksSortedByTitle();
+        for (Book book : allBooksSortedByTitle) {
+            System.out.println(book);
+        }
+        Book allBooksByISBN = BookService.getAllBooksByISBN("0987654321");
+        System.out.println(allBooksByISBN);
     }
 }
